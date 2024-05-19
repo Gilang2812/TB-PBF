@@ -15,7 +15,7 @@
                                 class=" justify-between items-center rounded-lg  w-full flex bg-[#7c68ee1f]  border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
                                 <input
                                     class="border-none bg-transparent w-full h-full p-4 text-slate-500 rounded-lg  focus:outline-none focus:border-slate-400 focus:ring-2  focus:ring-slate-400"
-                                    type="text" id="search" placeholder="serach">
+                                    type="text" id="search" placeholder="search">
                                 <div class="px-4 r">
                                     <label class=" cursor-pointer" for="search">
                                         <svg width="36" height="28" viewBox="0 0 36 37" fill="none"
@@ -37,15 +37,15 @@
                                 </div>
                                 <div class="w-full space-y-3">
                                     <h1 class="text-2xl">{{$buku->judul_buku}}</h1>
-                                    <h1 class="px-3 py-1 border w-fit rounded-2xl border-slate-300">{{$buku->pengarang}}</h1>
+                                    <h1 class="px-3 py-1 border w-fit rounded-2xl border-slate-300">{{ucwords($buku->pengarang)}}</h1>
                                     <div class="flex ">
                                         <div class="px-4">
                                             <h1>Penerbit</h1>
                                             <h1>Pengarang</h1>
                                         </div>
                                         <div class="px-4 ">
-                                            <h1>: {{$buku->penerbit?->nama}}</h1>
-                                            <h1>: {{$buku->pengarang}}</h1>
+                                            <h1>: {{ucwords($buku->penerbit?->nama)}}</h1>
+                                            <h1>: {{ucwords($buku->pengarang)}}</h1>
                                         </div>
                                     </div>
                                 </div>

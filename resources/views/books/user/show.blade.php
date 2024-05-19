@@ -13,7 +13,7 @@
                         <div class="">
                             <form action="" method="POST">
                                 @if ($buku->ketersediaan ===0)
-                                <input class="px-5 py-2 ring-2 ring-zinc-500 bg-zinc-400 rounded-lg text-white" type="submit" value="Pinjam" disabled>
+                                <input class="px-5 py-2   bg-zinc-300 text-slate-500 rounded-lg " type="submit" value="Pinjam" disabled>
                                 @else
                                 <input class="px-5 py-2 bg-blue-600 rounded-lg text-white" type="submit" value="Pinjam">
                                 @endif
@@ -59,7 +59,7 @@
                                         <p>: {{$buku->nomor_buku}}</p>
                                         <p>: {{$buku->judul_buku}}</p>
                                         <p>: {{ucwords( $buku->pengarang)}}</p>
-                                        <p>: {{ucwords($buku->penerbit->nama)}}</p>
+                                        <p>: {{ucwords($buku->penerbit?->nama)}}</p>
                                         <p>: {{$buku->posisi->posisi}}</p>
                                     </div>
                                 </div>

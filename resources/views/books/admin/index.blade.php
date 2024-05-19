@@ -39,8 +39,8 @@
                                             <td class="px-6 py-4">{{ $loop->iteration }}</td>
                                             <td class="px-6 py-4">{{ $buku->nomor_buku }}</td>
                                             <td class="px-6 py-4">{{ $buku->judul_buku }}</td>
-                                            <td class="px-6 py-4">{{ $buku->penerbit?->nama }}</td>
-                                            <td class="px-6 py-4">{{ $buku->pengarang }}</td>
+                                            <td class="px-6 py-4">{{ ucwords($buku->penerbit?->nama) }}</td>
+                                            <td class="px-6 py-4">{{ ucwords($buku->pengarang)}}</td>
                                             <td class="px-6 py-4">{{ $buku->ketersediaan }}</td>
                                             <td class="px-6 py-4">{{ $buku->image }}</td>
                                             <td class="px-6 py-4">{{ $buku->posisi?->posisi }}</td>
