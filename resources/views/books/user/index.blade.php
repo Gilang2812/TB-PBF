@@ -29,7 +29,9 @@
 
                             </div>
                         </div>
-
+                        @if ($book->count() === 0)
+                            <p class="text-center">Belum ada buku tersedia</p>      
+                        @endif
                         @foreach ($book as $buku)
                             <div class="bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] rounded-sm  p-3 flex space-x-6">
                                 <div class="w-44 px-3">
