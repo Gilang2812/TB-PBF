@@ -26,7 +26,7 @@
                                 <button class="h-full bg-yellow-500 text-white px-3 py-1 rounded-tl-3xl rounded-br-3xl" type="submit">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
-                                <button class=" text-center h-full align-middle bg-emerald-500  text-white px-3 py-1 rounded-br-3xl" type="submit">
+                                <button class=" text-center h-full align-middle bg-emerald-500   text-white px-3 py-1 rounded-br-3xl" type="submit">
                                     <i class="fas fa-check"></i>
                                 </button>
                             </div>

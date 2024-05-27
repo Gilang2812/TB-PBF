@@ -17,7 +17,8 @@ return new class extends Migration
             $table->primary(['nomor_peminjaman','nomor_buku']);
             $table->foreign('nomor_peminjaman')->references('nomor_peminjaman')->on('peminjaman');
             $table->foreign('nomor_buku')->references('nomor_buku')->on('buku');
-            $table->date('tanggal_pengembalian'); 
+            $table->date('tanggal_pengembalian')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

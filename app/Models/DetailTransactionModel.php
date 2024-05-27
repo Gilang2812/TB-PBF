@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DetailTransactionModel extends Model
 {
@@ -17,7 +18,8 @@ class DetailTransactionModel extends Model
     protected $fillable = [
         'nomor_peminjaman',
         'nomor_buku',
-        'tanggal_pengembalian'
+        'tanggal_pengembalian',
+        'statusv'
     ];
 
     /**
@@ -44,5 +46,15 @@ class DetailTransactionModel extends Model
         }
 
         return $query;
+    }
+
+    public function buku():BelongsTo
+    {
+        return $this->belongsTo(bookModel::class, 'nomor_buku', 'nomor_buku');
+    }
+
+    public function peminjaman():BelongsTo
+    {
+        return $this->belongsTo(TransactionModel::class, 'nomor_peminjaman', 'nomor_peminjaman');
     }
 }
