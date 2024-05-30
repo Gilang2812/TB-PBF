@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="jenis_buku" class="text-lg font-semibold">Jenis Buku:</label>
+                            <label for="jenis_buku" class="text-lg font-semibold">Judul Buku:</label>
                             <input type="text" id="jenis_buku" name="judul_buku" 
                                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
                         </div>

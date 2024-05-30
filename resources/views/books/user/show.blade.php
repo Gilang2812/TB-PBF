@@ -11,7 +11,10 @@
                 <div class="p-6 text-gray-900">
                     <div class="container space-y-4 flex flex-row-reverse gap-8">
                         <div class="">
-                            <form action="" method="POST">
+
+                            <form action="{{route('transaction.store',$buku->nomor_buku)}}" method="POST">
+                                @csrf
+
                                 @if ($buku->ketersediaan ===0)
                                 <input class="px-5 py-2   bg-zinc-300 text-slate-500 rounded-lg " type="submit" value="Pinjam" disabled>
                                 @else
@@ -60,7 +63,7 @@
                                         <p>: {{$buku->judul_buku}}</p>
                                         <p>: {{ucwords( $buku->pengarang)}}</p>
                                         <p>: {{ucwords($buku->penerbit?->nama)}}</p>
-                                        <p>: {{$buku->posisi->posisi}}</p>
+                                        <p>: {{$buku->posisi?->posisi}}</p>
                                     </div>
                                 </div>
                             </div>

@@ -48,12 +48,12 @@ class DetailTransactionModel extends Model
         return $query;
     }
 
-    public function buku():BelongsTo
+    public function buku()
     {
         return $this->belongsTo(bookModel::class, 'nomor_buku', 'nomor_buku');
     }
 
-    public function peminjaman():BelongsTo
+    public function peminjaman()
     {
         return $this->belongsTo(TransactionModel::class, 'nomor_peminjaman', 'nomor_peminjaman');
     }
