@@ -12,23 +12,29 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $book = bookModel::all();
-        if (Auth::user()?->isAdmin===1) {
-        
+        $search = $request->input('search');
+        $query = bookModel::query();
+
+        if ($search) {
+            $query->where('judul_buku', 'like', '%' . $search . '%');
+        }
+
+        $book = $query->get();
+
+        if (Auth::user()?->isAdmin === 1) {
             return view('books.admin.index', compact('book'));
         } else {
-    
             return view('books.user.index', compact('book'));
         }
     }
 
     public function create()
     {
-        $posisi = posisiModel::all();
-        $penerbit = penerbitModel::all();
-        return view('books.admin..create', compact('posisi', 'penerbit'));
+        $posisi = PosisiModel::all();
+        $penerbit = PenerbitModel::all();
+        return view('books.admin.create', compact('posisi', 'penerbit'));
     }
 
     public function store(Request $request)
@@ -64,15 +70,13 @@ class BookController extends Controller
         $posisi = PosisiModel::all();
         $penerbit = PenerbitModel::all();
 
-        if (Auth::user()?->isAdmin===1) {
-   
+        if (Auth::user()?->isAdmin === 1) {
             return view('books.admin.edit', compact('buku', 'posisi', 'penerbit'));
         } else {
-      
             return view('books.user.show', compact('buku', 'posisi', 'penerbit'));
         }
-       
     }
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -87,12 +91,11 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $buku = BookModel::findOrFail($id);
+        $buku = bookModel::findOrFail($id);
         $buku->update($request->all());
 
         return redirect()->route('book.index')->with('success', 'Book updated successfully');
     }
-
 
     public function destroy($id)
     {
