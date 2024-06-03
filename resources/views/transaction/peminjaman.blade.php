@@ -12,7 +12,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-32 text-gray-900 py-8">
-                    <h1 class="text-center text-3xl font-serif font-bold pt-16 pb-8">Daftar Pinjaman</h1>
+                    <h1 class="text-center text-3xl font-serif font-bold pt-16 pb-8">Konfirmasi Pinjaman</h1>
+                    <p>Total item : {{$transaksi->count()}} </p>
                     @foreach ($transaksi as $t)
                         <form action="">
                             <div class="flex items-center border-2 rounded-3xl  my-4">
