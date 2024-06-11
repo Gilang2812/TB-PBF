@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DendaController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -15,6 +16,13 @@ Route::post('/book/create', [BookController::class,'store']) ;
 Route::get('/book/{id}', [BookController::class,'edit'])->name('book.edit');
 Route::patch('/buku/{id}/', [BookController::class, 'update'])->name('book.update'); 
 Route::delete('/buku/{id}/delete', [BookController::class, 'destroy'])->name('book.destroy'); 
+
+Route::get('/denda', [DendaController::class,'index'])->name('denda.index');
+Route::get('/denda/create', [DendaController::class,'create'])->name('denda.create');
+Route::post('/denda/create', [DendaController::class,'store']) ;
+Route::get('/denda/{id}', [DendaController::class,'edit'])->name('denda.edit');
+Route::patch('/denda/{id}/', [DendaController::class, 'update'])->name('denda.update'); 
+Route::delete('/denda/{id}/delete', [DendaController::class, 'destroy'])->name('denda.destroy'); 
 
 Route::get('/peminjaman',[TransactionController::class,'index']);
 

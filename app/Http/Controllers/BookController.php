@@ -55,7 +55,7 @@ class BookController extends Controller
 
         $buku->save();
 
-        return Redirect::route('book.index');
+        return Redirect::route('denda.index');
     }
 
     public function edit($id)
