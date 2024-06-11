@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\DetailTransactionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -21,6 +22,9 @@ Route::delete('/buku/{id}/delete', [BookController::class, 'destroy'])->name('bo
 Route::get('/peminjaman',[TransactionController::class,'index'])->name('pinjaman.index.admin');
 Route::get('/pinjaman',[TransactionController::class,'indexClient'])->name('pinjaman.index.user');
 Route::patch('/pinjaman/{id}',[TransactionController::class,'update'])->name('pinjaman.update'); 
+Route::get('/history/user',[TransactionController::class,'showUser'])->name('pinjaman.history.user');
+Route::get('/history',[TransactionController::class,'showAdmin'])->name('pinjaman.history.admin');
+Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}',[DetailTransactionController::class,'cancelAction'])->name('pinjaman.cancel.user');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

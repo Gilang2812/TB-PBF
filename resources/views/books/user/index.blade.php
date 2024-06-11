@@ -7,14 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-[#FAFBFC] overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-[#FAFBFC]/30 border border-white backdrop-blur-md overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 px-64">
                     <div class="container py-20 space-y-14">
                         <div class="     ">
                             <div
-                                class=" justify-between items-center rounded-lg  w-full flex bg-[#7c68ee1f]  border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
+                                class=" justify-between items-center rounded-lg  w-full flex bg-[#7c68ee1f]/20  border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
                                 <input
-                                    class="border-none bg-transparent w-full h-full p-4 text-slate-500 rounded-lg  focus:outline-none focus:border-slate-400 focus:ring-2  focus:ring-slate-400"
+                                    class="border-none bg-transparent w-full h-full p-4 text-black rounded-lg  focus:outline-none focus:border-white focus:ring-2  focus:ring-white"
                                     type="text" id="search" placeholder="search">
                                 <div class="px-4 r">
                                     <label class=" cursor-pointer" for="search">
@@ -33,7 +33,7 @@
                             <p class="text-center">Belum ada buku tersedia</p>      
                         @endif
                         @foreach ($book as $buku)
-                            <div class="bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] rounded-sm  p-3 flex space-x-6">
+                            <div class="bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] rounded-lg  p-3 flex space-x-6">
                                 <div class="w-44 px-3">
                                     <img class="bg-slate-200 rounded-lg h-24" src="" alt="gambar buku">
                                 </div>

@@ -11,7 +11,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-sm">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-32 text-gray-900 py-8">
                     <h1 class="text-center bg-gradient-to-r from-cyan-900 to-cyan-500 text-transparent bg-clip-text text-3xl font-serif font-bold pt-16 pb-8">
@@ -19,7 +19,10 @@
                     </h1>
                     <p>Total Peminjaman: {{ $responseData['user']->count() }}</p>
                     
-                    @foreach ($responseData['user'] as $t)
+                    @foreach ($responseData['user']->unique('nomor_peminjaman') as $t)
+                    @php
+                        $transaksiUser  = $responseData['transaksi']->where('nomor_peminjaman', '=', $t['nomor_peminjaman'])->count();
+                    @endphp
                         <div x-data="{ 
                             open: false, 
                             height: 0, 
@@ -37,7 +40,13 @@
                         x-init="contentHeight = $refs.content.scrollHeight; delay = 100 * {{ $loop->index }}">
                              
                             <div @click="setTimeout(() => handleClick(), delay)" :class="`flex items-center border-2 rounded-3xl mt-8 cursor-pointer ${bg}`">
-                                <p class="grow px-8">{{ ucwords($t->peminjaman?->user?->name) }}</p>
+                                <p class="grow px-8">{{ ucwords($t->nomor_peminjaman) }}</p>
+                                <p class="grow px-8"> By : {{ ucwords($t->peminjaman?->user?->name) }}</p>
+                                
+                                <div class="text-center">
+                                    <p>Count Item :</p>
+                                    <p class="grow px-8">{{ $transaksiUser}}</p>
+                                </div>
                                 
                                 <div class="text-center">
                                     <p>Tanggal Pinjam:</p>
@@ -51,14 +60,14 @@
                                 
                                 <div class="flex h-16 rounded-3xl items-center justify-center pl-8">
                                     <button class="h-full bg-indigo-500 text-white px-3 py-1 rounded-tl-3xl rounded-br-3xl" type="submit">
-                                        <i :class="`fas fa-list tra ${rotate} transition-transform duration-300`"></i>
+                                        <i :class="`fas fa-list ${rotate} transition-transform duration-300`"></i>
                                     </button>
                                 </div>
                             </div>
                             
                             <div x-ref="content" :style="{ height: `${height}px` }" class="overflow-hidden transition-height duration-300 ease-in-out pr-10">
                                 @foreach ($responseData['transaksi'] as $item)
-                                    @if ($item->peminjaman->id_user == $t->peminjaman->id_user)
+                                    @if ($item->peminjaman->nomor_peminjaman == $t->peminjaman->nomor_peminjaman)
                                         <div class="flex items-center border-2 rounded-3xl cursor-pointer">
                                             <img class="mx-6 h-16 w-12 bg-slate-200 rounded-sm" src="" alt="gambar buku">
                                             <p class="grow px-8">{{ $item->buku?->judul_buku }}</p>
