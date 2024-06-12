@@ -16,13 +16,13 @@ class UserController extends Controller
             ->orWhere('email', 'like', "%{$search}%")
             ->paginate(10);
 
-        return view('users.index', compact('users'));
+        return view('users.admin.index', compact('users'));
     }
 
     // Show the form for creating a new resource.
     public function create()
     {
-        return view('users.create');
+        return view('users.admin.create');
     }
 
     // Store a newly created resource in storage.
@@ -49,7 +49,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit', compact('user'));
+        return view('users.admin.edit', compact('user'));
     }
 
     // Update the specified resource in storage.

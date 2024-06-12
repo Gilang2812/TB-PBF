@@ -21,7 +21,7 @@
                     <x-nav-link :href="route('penerbit.index')" :active="request()->routeIs('penerbit.index')">
                         {{ __('Penerbit') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('penerbit.index')">
                         {{ __('Users') }}
                     </x-nav-link>
                 </div>
