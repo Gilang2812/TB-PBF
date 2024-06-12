@@ -25,6 +25,9 @@ Route::patch('/pinjaman/{id}',[TransactionController::class,'update'])->name('pi
 Route::get('/history/user',[TransactionController::class,'showUser'])->name('pinjaman.history.user');
 Route::get('/history',[TransactionController::class,'showAdmin'])->name('pinjaman.history.admin');
 Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}',[DetailTransactionController::class,'cancelAction'])->name('pinjaman.cancel.user');
+Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/accept',[DetailTransactionController::class,'acceptRequest'])->name('pinjaman.accept');
+Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/reject',[DetailTransactionController::class,'rejectRequest'])->name('pinjaman.reject');
+Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/return',[DetailTransactionController::class,'returnRequest'])->name('pinjaman.return');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

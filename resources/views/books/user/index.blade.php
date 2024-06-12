@@ -12,9 +12,9 @@
                     <div class="container py-20 space-y-14">
                         <div class="     ">
                             <div
-                                class=" justify-between items-center rounded-lg  w-full flex bg-[#7c68ee1f]/20  border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
+                                class=" justify-between items-center rounded-lg  w-full flex bg-[#7c68ee1f]/10  border border-white  shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
                                 <input
-                                    class="border-none bg-transparent w-full h-full p-4 text-black rounded-lg  focus:outline-none focus:border-white focus:ring-2  focus:ring-white"
+                                    class="border-none bg-transparent w-full h-full placeholder-white p-4 text-black rounded-lg border focus:outline-none focus:border-none focus:border-white focus:ring  focus:ring-white"
                                     type="text" id="search" placeholder="search">
                                 <div class="px-4 r">
                                     <label class=" cursor-pointer" for="search">
