@@ -3,7 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\PenerbitController; // Tambahkan ini
+use App\Http\Controllers\PenerbitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
