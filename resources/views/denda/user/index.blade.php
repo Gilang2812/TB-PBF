@@ -17,6 +17,7 @@
                                 <thead>
                                     <tr class="bg-gray-50 text-center">
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nomor</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Tanggal Pengembalian</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nomor Buku</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Judul Buku</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Denda</th>
@@ -26,6 +27,7 @@
                                     @foreach ($dendas as $denda)
                                         <tr class="hover:bg-slate-50">
                                             <td class="px-6 py-4">{{ $loop->iteration }}</td>
+                                            <td class="px-6 py-4"></td>
                                             <td class="px-6 py-4"></td>
                                             <td class="px-6 py-4"></td>
                                             <td class="px-6 py-4">{{ $denda->denda}}</td>
