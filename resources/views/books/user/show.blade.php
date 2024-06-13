@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/40 backdrop-blur-md border border-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="container space-y-4 flex flex-row-reverse gap-8">
                         <div class="">
@@ -31,12 +31,12 @@
                             <hr>
                             <div>
                                 <h1> Ketersediaan</h1>
-                                <table class="w-full border-collapse border-slate-300 border">
-                                    <tbody class="border">
+                                <table class="w-full border-collapse border-white border roudned-md">
+                                    <tbody class="border border-white rounded-md">
                                         <tr>
-                                            <td class="border-slate-300 border py-4 px-3">{{$buku->nomor_buku}} </td>
-                                            <td class="border-slate-300 border py-4 px-3 w-64">{{$buku->posisi?->posisi}}</td>
-                                            <td class="border-slate-300 border py-4 px-3 w-64 "> 
+                                            <td class="border-white border py-4 px-3">{{$buku->nomor_buku}} </td>
+                                            <td class="border-white border py-4 px-3 w-64">{{$buku->posisi?->posisi}}</td>
+                                            <td class="border-white border py-4 px-3 w-64 "> 
                                                 @if ($buku->ketersediaan ===0)
                                                 <span    
                                                     class="text-white bg-red-500 p-1 font-serif rounded-sm "> Tidak Tersedia </span></td>
