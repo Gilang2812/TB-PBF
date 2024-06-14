@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 // Routes for books
+Route::get('/book/user  ', [BookController::class, 'indexClient'])->name('book.user.index');
 Route::middleware(['auth'])->group(function () {
     Route::get('/book', [BookController::class, 'index'])->name('book.index');
     Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
@@ -25,34 +26,27 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/book/{id}/delete', [BookController::class, 'destroy'])->name('book.destroy');
 });
 
-Route::get('/denda', [DendaController::class,'index'])->name('denda.index');
-Route::get('/denda/create', [DendaController::class,'create'])->name('denda.create');
-Route::post('/denda/create', [DendaController::class,'store']) ;
-Route::get('/denda/{id}', [DendaController::class,'edit'])->name('denda.edit');
-Route::patch('/denda/{id}/', [DendaController::class, 'update'])->name('denda.update'); 
-Route::delete('/denda/{id}/delete', [DendaController::class, 'destroy'])->name('denda.destroy'); 
-
-Route::get('/peminjaman',[TransactionController::class,'index']);
-Route::get('/peminjaman',[TransactionController::class,'index'])->name('pinjaman.index.admin');
-Route::get('/pinjaman',[TransactionController::class,'indexClient'])->name('pinjaman.index.user');
-Route::patch('/pinjaman/{id}',[TransactionController::class,'update'])->name('pinjaman.update'); 
-Route::get('/history/user',[TransactionController::class,'showUser'])->name('pinjaman.history.user');
-Route::get('/history',[TransactionController::class,'showAdmin'])->name('pinjaman.history.admin');
-Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}',[DetailTransactionController::class,'cancelAction'])->name('pinjaman.cancel.user');
-Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/accept',[DetailTransactionController::class,'acceptRequest'])->name('pinjaman.accept');
-Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/reject',[DetailTransactionController::class,'rejectRequest'])->name('pinjaman.reject');
-Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/return',[DetailTransactionController::class,'returnRequest'])->name('pinjaman.return');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    
-    Route::post('/pinjam/{id}',[TransactionController::class,'store'])->name('transaction.store');
-// Route for transactions
+// Routes for denda
 Route::middleware(['auth'])->group(function () {
-    Route::get('/peminjaman', [TransactionController::class, 'index']);
+    Route::get('/denda', [DendaController::class,'index'])->name('denda.index');
+    Route::get('/denda/create', [DendaController::class,'create'])->name('denda.create');
+    Route::post('/denda/create', [DendaController::class,'store']);
+    Route::get('/denda/{id}', [DendaController::class,'edit'])->name('denda.edit');
+    Route::patch('/denda/{id}', [DendaController::class, 'update'])->name('denda.update'); 
+    Route::delete('/denda/{id}/delete', [DendaController::class, 'destroy'])->name('denda.destroy');
+});
+
+// Routes for transactions
+Route::middleware(['auth'])->group(function () {
+    Route::get('/peminjaman', [TransactionController::class,'index'])->name('pinjaman.index.admin');
+    Route::get('/pinjaman', [TransactionController::class,'indexClient'])->name('pinjaman.index.user');
+    Route::patch('/pinjaman/{id}', [TransactionController::class,'update'])->name('pinjaman.update'); 
+    Route::get('/history/user', [TransactionController::class,'showUser'])->name('pinjaman.history.user');
+    Route::get('/history', [TransactionController::class,'showAdmin'])->name('pinjaman.history.admin');
+    Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}', [DetailTransactionController::class,'cancelAction'])->name('pinjaman.cancel.user');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/accept', [DetailTransactionController::class,'acceptRequest'])->name('pinjaman.accept');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/reject', [DetailTransactionController::class,'rejectRequest'])->name('pinjaman.reject');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/return', [DetailTransactionController::class,'returnRequest'])->name('pinjaman.return');
     Route::post('/pinjam/{id}', [TransactionController::class, 'store'])->name('transaction.store');
 });
 
@@ -62,22 +56,23 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware(['auth'])->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
+// Email verification routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->name('verification.notice');
 
-    return redirect('/profile');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/profile');
+    })->middleware('signed')->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
+    })->middleware('throttle:6,1')->name('verification.send');
+});
 
 // Routes for penerbit
 Route::middleware(['auth'])->group(function () {
@@ -89,11 +84,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/penerbit/{id}/delete', [PenerbitController::class, 'destroy'])->name('penerbit.destroy');
 });
 
-// Rute untuk users
+// Routes for users
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users/create', [UserController::class, 'store']);
+    Route::post('/users/create', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}/delete', [UserController::class, 'destroy'])->name('users.destroy');

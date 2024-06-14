@@ -23,11 +23,21 @@ class BookController extends Controller
 
         $book = $query->get();
 
-        if (Auth::user()?->isAdmin === 1) {
-            return view('books.admin.index', compact('book'));
-        } else {
-            return view('books.user.index', compact('book'));
+        return view('books.admin.index', compact('book'));
+    }
+
+    public function indexClient(Request $request)
+    {
+        $search = $request->input('search');
+        $query = bookModel::query();
+
+        if ($search) {
+            $query->where('judul_buku', 'like', '%' . $search . '%');
         }
+
+        $book = $query->get();
+
+        return view('books.user.index', compact('book'));
     }
 
     public function create()

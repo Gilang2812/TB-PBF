@@ -15,9 +15,6 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('book.index')" :active="request()->routeIs('book.index')">
-                        {{ __('Book') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('denda.index')" :active="request()->routeIs('denda.index')">
                         {{ __('Denda') }}
                     </x-nav-link>
@@ -25,7 +22,13 @@
                         <x-nav-link :href="route('pinjaman.index.admin')" :active="request()->routeIs('pinjaman.index.admin')">
                             {{ __('Peminjaman') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('book.index')" :active="request()->routeIs('book.index')">
+                            {{ __('Book') }}
+                        </x-nav-link>
                     @else
+                        <x-nav-link :href="route('book.user.index')" :active="request()->routeIs('book.user.index')">
+                            {{ __('Book') }}
+                        </x-nav-link>
                         @if (Auth::check())
                             <x-nav-link :href="route('pinjaman.index.user')" :active="request()->routeIs('pinjaman.index.user')">
                                 {{ __('Peminjaman') }}
@@ -33,6 +36,7 @@
                             <x-nav-link :href="route('pinjaman.history.user')" :active="request()->routeIs('pinjaman.history.user')">
                                 {{ __('history') }}
                             </x-nav-link>
+                        @else
                         @endif
                     @endif
 
