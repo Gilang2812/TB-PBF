@@ -17,6 +17,7 @@
 </head>
 
 <body class=" font-sans text-gray-900 antialiased">
+    @include('layouts.navigation')
     <div class="min-h-screen flex flex-col bg-gray-100 fle">
  
         <div class="grow flex flex-col sm:justify-center items-center pt-6 sm:pt-0 ">

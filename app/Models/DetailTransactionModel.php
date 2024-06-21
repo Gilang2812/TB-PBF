@@ -19,7 +19,7 @@ class DetailTransactionModel extends Model
         'nomor_peminjaman',
         'nomor_buku',
         'tanggal_pengembalian',
-        'statusv'
+        'status'
     ];
 
     /**

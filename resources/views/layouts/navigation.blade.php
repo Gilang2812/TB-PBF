@@ -12,21 +12,31 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('denda.index')" :active="request()->routeIs('denda.index')">
-                        {{ __('Denda') }}
-                    </x-nav-link>
+
                     @if (Auth::user()?->isAdmin === 1)
-                        <x-nav-link :href="route('pinjaman.index.admin')" :active="request()->routeIs('pinjaman.index.admin')">
-                            {{ __('Peminjaman') }}
-                        </x-nav-link>
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>   
                         <x-nav-link :href="route('book.index')" :active="request()->routeIs('book.index')">
                             {{ __('Book') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('pinjaman.index.admin')" :active="request()->routeIs('pinjaman.index.admin')">
+                            {{ __('Peminjaman') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('denda.index')" :active="request()->routeIs('denda.index')">
+                            {{ __('Denda & Durasi') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('penerbit.index')" :active="request()->routeIs('penerbit.index')">
+                            {{ __('Penerbit') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('pinjaman.history.admin')" :active="request()->routeIs('pinjaman.history.admin')">
+                            {{ __('History') }}
+                        </x-nav-link>
                     @else
-                        <x-nav-link :href="route('book.user.index')" :active="request()->routeIs('book.user.index')">
+                        <x-nav-link :href="route('book.userIndex')" :active="request()->routeIs('book.userIndex')">
                             {{ __('Book') }}
                         </x-nav-link>
                         @if (Auth::check())
@@ -41,12 +51,7 @@
                     @endif
 
 
-                    <x-nav-link :href="route('penerbit.index')" :active="request()->routeIs('penerbit.index')">
-                        {{ __('Penerbit') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('penerbit.index')">
-                        {{ __('Users') }}
-                    </x-nav-link>
+
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Book') }} > {{ $buku->judul_buku }}
+            {{ __('Book') }} >
         </h2>
     </x-slot>
 
@@ -29,7 +29,7 @@
                
                     </form>
                     <form id="delete-book-form-{{ $denda->id_denda }}" method="POST" style="display: none;"
-                        action="{{ route('book.destroy', $denda->id_denda) }}">
+                        action="{{ route('denda.destroy', $denda->id_denda) }}">
                         @csrf
                         @method('DELETE')
                     </form>

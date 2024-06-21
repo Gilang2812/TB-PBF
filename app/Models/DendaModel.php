@@ -9,7 +9,7 @@ class DendaModel extends Model
 {
     use HasFactory;
     protected $table = 'denda';
-    protected $primaryKey = 'id_posisi';
+    protected $primaryKey = 'id_denda';
     public $timestamps = true;
 
     protected $fillable = [

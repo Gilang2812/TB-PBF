@@ -13,7 +13,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-2">
             <div
-                class="bg-white/40 text-sm backdrop-blur-md border border-white overflow-hidden shadow-sm sm:rounded-lg">
+                class="bg-white/40 text-sm backdrop-blur-sm border border-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-16 text-black h-full">
                     <h1
                         class="text-center bg-gradient-to-br from-cyan-500 to-indigo-700 text-transparent bg-clip-text text-5xl font-mono font-extrabold pb-8">
@@ -38,17 +38,19 @@
                             bg: '',
                             rotate: '',
                             pd: '',
+                            text:'',
                             handleClick() {
                                 this.open = !this.open;
                                 this.height = this.open ? this.contentHeight : 0;
-                                this.bg = this.open ? 'bg-slate-200' : '';
+                                this.bg = this.open ? 'bg-slate-400' : '';
                                 this.rotate = this.open ? 'rotate-90' : '';
                                 this.pd = this.open ? 'mb-4' : '';
+                                this.text = this.open ? 'text-white' : '';
                             }
                         }" x-init="contentHeight = $refs.content.scrollHeight;
                         delay = 100 * {{ $loop->index }}">
                             <div @click="setTimeout(() => handleClick(), delay)"
-                                :class="` shadow-md border-b rounded-l-3xl bg-white rounded-br-[30px] font-mono flex justify-between ${bg}`">
+                                :class="` shadow-md border-b rounded-l-3xl bg-white rounded-br-[30px] font-mono flex justify-between ${bg} transition-all duration-300 ${text}`">
                                 <div class="items-center py-1 grid grid-cols-5 grow pl-6">
                                     <p>{{ $t->nomor_peminjaman }}</p>
 
@@ -84,11 +86,11 @@
                                 </div>
                             </div>
                             <div x-ref="content" :style="{ height: `${height}px` }"
-                                :class="`mb-2 overflow-hidden transition-height duration-300 ease-in-out pr-10`">
+                                :class="`mb-2 overflow-hidden transition-height duration-300 ease-in-out `">
                                 @foreach ($transaksiPeminjaman as $item)
-                                    <div class="px-10">
+                                    <div class="">
                                         <div
-                                            class=" grid grid-cols-8 items-center gap-8 border-0 font-mono bg-white border-cyan-700 border-t shadow-md rounded-l-3xl rounded-br-[30px] cursor-pointer">
+                                            class="bg-slate-200 grid grid-cols-8 items-center gap-8 border-0 font-mono border-cyan-700 border-t shadow-md rounded-l-3xl rounded-br-[30px] cursor-pointer">
                                             <img class="mx-6 h-16 w-12 bg-slate-200 rounded-sm " src=""
                                                 alt="gambar buku">
                                             <div class="text-center text-sm px-8 col-span-2">

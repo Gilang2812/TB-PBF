@@ -10,16 +10,14 @@
             <div class="bg-[#FAFBFC]/30 border border-white backdrop-blur-md overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="text-gray-900 px-64">
                     <div class="container py-20 space-y-14">
-                        <div>
-                            <form action="{{ route('book.index') }}" method="GET">
-                                <div class="flex justify-between items-center rounded-lg w-full bg-[#7c68ee1f]/10 border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
+                        <div class="border-2 border-white rounded-lg">
+                            <form action="{{ route('book.userIndex') }}" method="GET">
+                                <div class="flex justify-between -center rounded-lg w-full bg-[#7c68ee1f]/10 border-none shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]">
                                     <input
-                                        class="border-none bg-transparent w-full h-full p-4 text-slate-500 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-400"
+                                        class="border-none bg-transparent w-full h-full p-4  text-white rounded-lg focus:outline-none focus:border-none focus:ring-2 focus:ring-none placeholder:text-white"
                                         type="text" name="search" id="search" placeholder="search" value="{{ request('search') }}">
-                                    <button type="submit" class="px-4">
-                                        <svg width="36" height="28" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M25.6458 23.0833H24.0329L23.4612 22.5321C25.4621 20.2046 26.6667 17.1829 26.6667 13.8958C26.6667 6.56625 20.7254 0.625 13.3958 0.625C6.06625 0.625 0.125 6.56625 0.125 13.8958C0.125 21.2254 6.06625 27.1667 13.3958 27.1667C16.6829 27.1667 19.7046 25.9621 22.0321 23.9612L22.5833 24.5329V26.1458L32.7917 36.3337L35.8337 33.2917L25.6458 23.0833ZM13.3958 23.0833C8.31208 23.0833 4.20833 18.9796 4.20833 13.8958C4.20833 8.81208 8.31208 4.70833 13.3958 4.70833C18.4796 4.70833 22.5833 8.81208 22.5833 13.8958C22.5833 18.9796 18.4796 23.0833 13.3958 23.0833Z" fill="#6284F9"/>
-                                        </svg>
+                                    <button type="submit" class="px-4 text-white">
+                                      <i class="fas fa-search"></i>
                                     </button>
                                 </div>
                             </form>

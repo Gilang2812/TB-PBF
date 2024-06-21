@@ -6,7 +6,7 @@
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto  ">
-            <div class="bg-white/40 backdrop-blur-md border border-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/40 backdrop-blur-sm border border-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-8  text-gray-900">
                     <div class=" mx-8 mt-8 space-y-8">
                         <a href="/book/create"

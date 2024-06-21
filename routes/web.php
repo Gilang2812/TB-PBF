@@ -10,18 +10,20 @@ use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DendaController;
+use App\Http\Controllers\DurasiController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
 // Routes for books
-Route::get('/book/user  ', [BookController::class, 'indexClient'])->name('book.user.index');
+Route::get('/book/user', [BookController::class, 'indexClient'])->name('book.userIndex');
+Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/book', [BookController::class, 'index'])->name('book.index');
     Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
     Route::post('/book/create', [BookController::class, 'store']);
-    Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
     Route::patch('/book/{id}', [BookController::class, 'update'])->name('book.update');
     Route::delete('/book/{id}/delete', [BookController::class, 'destroy'])->name('book.destroy');
 });
@@ -35,6 +37,12 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/denda/{id}', [DendaController::class, 'update'])->name('denda.update'); 
     Route::delete('/denda/{id}/delete', [DendaController::class, 'destroy'])->name('denda.destroy');
 });
+
+Route::get('/durasi/create', [DurasiController::class,'create'])->name('durasi.create');   
+Route::post('/durasi/create', [DurasiController::class,'store'])->name('durasi.store');   
+Route::get('/durasi/{id}', [DurasiController::class,'edit'])->name('durasi.edit');  
+Route::patch('/durasi/{id}', [DurasiController::class,'update'])->name('durasi.update');   
+Route::delete('/durasi/{id}/delete', [DurasiController::class,'destroy'])->name('durasi.destroy');    
 
 // Routes for transactions
 Route::middleware(['auth'])->group(function () {

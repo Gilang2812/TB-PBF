@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white/40 backdrop-blur-md border border-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/40 backdrop-blur-sm border border-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-32 py-20 text-gray-900">
                     <form action="{{ route('book.update', $buku->nomor_buku) }}" method="POST" class="space-y-4"
                         enctype="multipart/form-data">

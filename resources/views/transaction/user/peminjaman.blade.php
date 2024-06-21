@@ -12,7 +12,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white/40 backdrop-blur-md border border-white shadow-inner- overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/40 backdrop-blur-sm border border-white shadow-inner- overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-32 text-gray-900 py-8">
                     <h1
                         class="text-center bg-gradient-to-r from-cyan-800 to-indigo-500 text-transparent bg-clip-text text-3xl font-serif font-bold pt-16 pb-8">
@@ -26,22 +26,42 @@
                             <img class="mx-6 h-16 w-12 bg-slate-200 rounded-md" src="" alt="gambar buku">
                             <p class="grow px-8">{{ $t->buku->judul_buku }}</p> 
                             <div class="px-10 ">
-                                @switch($t->status)
-                                    @case(0)
-                                        <p class="bg-yellow-500 rounded-xl w-fit px-2 py-1 text-white">waiting</p>
-                                    @break
+                                @switch($item->status)
+                                @case(0)
+                                    <p
+                                        class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Pending</p>
+                                @break
 
-                                    @case(1)
-                                        <p class="bg-green-500 rounded-xl w-fit px-2 py-1 text-white">acc</p>
-                                    @break
+                                @case(1)
+                                    <p
+                                        class="bg-gradient-to-r from-green-400 to-green-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Accepted</p>
+                                @break
 
-                                    @case(2)
-                                        <p class="bg-blue-500 rounded-xl w-fit px-2 py-1 text-white">Returned</p>
-                                    @break
+                                @case(2)
+                                    <p
+                                        class="bg-gradient-to-r from-red-400 to-red-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Rejected</p>
+                                @break
 
-                                    @default
-                                        <p class="bg-gray-500 rounded-xl w-fit px-2 py-1 text-white">unknown</p>
-                                @endswitch
+                                @case(3)
+                                    <p
+                                        class="bg-gradient-to-r from-orange-400 to-orange-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Payment Required</p>
+                                @break
+
+                                @case(4)
+                                    <p
+                                        class="bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Complete</p>
+                                @break
+
+                                @default
+                                    <p
+                                        class="bg-gradient-to-r from-gray-400 to-gray-600 rounded-xl w-fit px-2 py-1 text-white">
+                                        Unknown</p>
+                            @endswitch
                             </div>
                             <div>
                                 <h1>Batas Pengembalian</h1>

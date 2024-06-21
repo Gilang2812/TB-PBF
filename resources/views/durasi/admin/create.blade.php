@@ -7,9 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white/30 backdrop-blur-sm border border-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="px-32 py-20 text-gray-900">
-                    <form action="/denda/create" method="POST" class="space-y-4" enctype="multipart/form-data">
+                    <form action="{{route('durasi.store')}}" method="POST" class="space-y-4" enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -24,14 +24,14 @@
             
               
                         <div>
-                            <label for="nama" class="text-lg font-semibold">Label Denda:</label>
+                            <label for="nama" class="text-lg font-semibold">Label Durasi:</label>
                             <input type="text" id="nama" name="nama" 
                                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" >
                         </div>
                         
                         <div>
-                            <label for="denda" class="text-lg font-semibold">Denda:</label>
-                            <input type="number" id="denda" name="denda" 
+                            <label for="durasi" class="text-lg font-semibold">Durasi:</label>
+                            <input type="number" id="durasi" name="durasi" 
                                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
                         </div>
                         <button type="submit"
