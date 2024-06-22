@@ -19,13 +19,16 @@
                         class="text-center bg-gradient-to-br from-cyan-500 to-indigo-700 text-transparent bg-clip-text text-5xl font-mono font-extrabold pb-8">
                         Recap
                     </h1>
+                    @php
+                        $allDenda = 0;
+                    @endphp
                     @foreach ($transaksi->unique('nomor_peminjaman') as $t)
                         @php
                             $transaksiPeminjaman = $transaksi->where('nomor_peminjaman', $t->nomor_peminjaman);
                             $totalBooks = $transaksiPeminjaman->count();
                             $returnedBooks = $transaksiPeminjaman->where('status', 4)->count();
                             $returnedPercentage = $totalBooks ? ($returnedBooks / $totalBooks) * 100 : 0;
-                            $durasi = 3; // Durasi peminjaman dalam hari
+                            $durasi = $t->peminjaman?->durasi?->durasi ?? 3;
                             $tanggalPeminjaman = Carbon::parse($t->peminjaman?->tanggal_peminjaman);
                             $deadlinePengembalian = $tanggalPeminjaman->copy()->addDays($durasi);
                             $totalDenda = 0;
@@ -38,9 +41,7 @@
                                 $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
                                 $absoluteDaysDifference = abs($daysDifference);
                                 $finePerDay = $item->peminjaman?->denda?->denda ?? 3000;
-                                $fine = $tanggal->greaterThan($dueDate)
-                                    ? $absoluteDaysDifference * $finePerDay
-                                    : 0;
+                                $fine = $tanggal->greaterThan($dueDate) ? $absoluteDaysDifference * $finePerDay : 0;
                                 $totalDenda += $fine;
                             }
                         @endphp
@@ -173,7 +174,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <h1 class="text-xs text-center">Denda</h1>
-                                                <h1 class="text-xs text-center">{{$absoluteDaysDifference}}</h1>
+                                                <h1 class="text-xs text-center">{{ $absoluteDaysDifference }}</h1>
                                                 <h1>{{ 'Rp ' . number_format($fine, 0, ',', '.') }}</h1>
                                             </div>
                                             <div
