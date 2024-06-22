@@ -17,7 +17,7 @@ class TransactionModel extends Model
         'nomor_peminjaman',
         'id_user',
         'id_durasi',
-        'id-denda',
+        'id_denda',
         'tanggal_peminjaman',
         'status'    
         ];

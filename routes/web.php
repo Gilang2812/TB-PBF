@@ -20,41 +20,42 @@ Route::get('/', function () {
 Route::get('/book/user', [BookController::class, 'indexClient'])->name('book.userIndex');
 Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
 
-Route::middleware(['auth'])->group(function () {
+
+
+// Routes for denda
+Route::middleware(['auth','admin'])->group(function () {
     Route::get('/book', [BookController::class, 'index'])->name('book.index');
     Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
     Route::post('/book/create', [BookController::class, 'store']);
     Route::patch('/book/{id}', [BookController::class, 'update'])->name('book.update');
     Route::delete('/book/{id}/delete', [BookController::class, 'destroy'])->name('book.destroy');
-});
-
-// Routes for denda
-Route::middleware(['auth'])->group(function () {
-    Route::get('/denda', [DendaController::class,'index'])->name('denda.index');
-    Route::get('/denda/create', [DendaController::class,'create'])->name('denda.create');
-    Route::post('/denda/create', [DendaController::class,'store']);
-    Route::get('/denda/{id}', [DendaController::class,'edit'])->name('denda.edit');
-    Route::patch('/denda/{id}', [DendaController::class, 'update'])->name('denda.update'); 
+    Route::get('/denda', [DendaController::class, 'index'])->name('denda.index');
+    Route::get('/denda/create', [DendaController::class, 'create'])->name('denda.create');
+    Route::post('/denda/create', [DendaController::class, 'store']);
+    Route::get('/denda/{id}', [DendaController::class, 'edit'])->name('denda.edit');
+    Route::patch('/denda/{id}', [DendaController::class, 'update'])->name('denda.update');
     Route::delete('/denda/{id}/delete', [DendaController::class, 'destroy'])->name('denda.destroy');
+    Route::get('/durasi/create', [DurasiController::class, 'create'])->name('durasi.create');
+    Route::post('/durasi/create', [DurasiController::class, 'store'])->name('durasi.store');
+    Route::get('/durasi/{id}', [DurasiController::class, 'edit'])->name('durasi.edit');
+    Route::patch('/durasi/{id}', [DurasiController::class, 'update'])->name('durasi.update');
+    Route::delete('/durasi/{id}/delete', [DurasiController::class, 'destroy'])->name('durasi.destroy');
 });
 
-Route::get('/durasi/create', [DurasiController::class,'create'])->name('durasi.create');   
-Route::post('/durasi/create', [DurasiController::class,'store'])->name('durasi.store');   
-Route::get('/durasi/{id}', [DurasiController::class,'edit'])->name('durasi.edit');  
-Route::patch('/durasi/{id}', [DurasiController::class,'update'])->name('durasi.update');   
-Route::delete('/durasi/{id}/delete', [DurasiController::class,'destroy'])->name('durasi.destroy');    
+
 
 // Routes for transactions
 Route::middleware(['auth'])->group(function () {
-    Route::get('/peminjaman', [TransactionController::class,'index'])->name('pinjaman.index.admin');
-    Route::get('/pinjaman', [TransactionController::class,'indexClient'])->name('pinjaman.index.user');
-    Route::patch('/pinjaman/{id}', [TransactionController::class,'update'])->name('pinjaman.update'); 
-    Route::get('/history/user', [TransactionController::class,'showUser'])->name('pinjaman.history.user');
-    Route::get('/history', [TransactionController::class,'showAdmin'])->name('pinjaman.history.admin');
-    Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}', [DetailTransactionController::class,'cancelAction'])->name('pinjaman.cancel.user');
-    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/accept', [DetailTransactionController::class,'acceptRequest'])->name('pinjaman.accept');
-    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/reject', [DetailTransactionController::class,'rejectRequest'])->name('pinjaman.reject');
-    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/return', [DetailTransactionController::class,'returnRequest'])->name('pinjaman.return');
+    Route::get('/peminjaman', [TransactionController::class, 'index'])->name('pinjaman.index.admin');
+    Route::get('/pinjaman', [TransactionController::class, 'indexClient'])->name('pinjaman.index.user');
+    Route::patch('/pinjaman/{id}', [TransactionController::class, 'update'])->name('pinjaman.update');
+    Route::get('/history/user', [TransactionController::class, 'showUser'])->name('pinjaman.history.user');
+    Route::get('/history', [TransactionController::class, 'showAdmin'])->name('pinjaman.history.admin');
+    Route::delete('/pinjaman/{nomor_buku}/{nomor_peminjaman}', [DetailTransactionController::class, 'cancelAction'])->name('pinjaman.cancel.user');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/accept', [DetailTransactionController::class, 'acceptRequest'])->name('pinjaman.accept');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/reject', [DetailTransactionController::class, 'rejectRequest'])->name('pinjaman.reject');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/return', [DetailTransactionController::class, 'returnRequest'])->name('pinjaman.return');
+    Route::patch('/pinjaman/{nomor_peminjaman}/{nomor_buku}/finish', [DetailTransactionController::class, 'finishRequest'])->name('pinjaman.finish');
     Route::post('/pinjam/{id}', [TransactionController::class, 'store'])->name('transaction.store');
 });
 
@@ -66,24 +67,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Email verification routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/email/verify', function () {
-        return view('auth.verify-email');
-    })->name('verification.notice');
 
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
-        return redirect('/profile');
-    })->middleware('signed')->name('verification.verify');
-
-    Route::post('/email/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotification();
-        return back()->with('message', 'Verification link sent!');
-    })->middleware('throttle:6,1')->name('verification.send');
-});
 
 // Routes for penerbit
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
     Route::get('/penerbit', [PenerbitController::class, 'index'])->name('penerbit.index');
     Route::get('/penerbit/create', [PenerbitController::class, 'create'])->name('penerbit.create');
     Route::post('/penerbit/create', [PenerbitController::class, 'store']);
@@ -107,4 +94,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

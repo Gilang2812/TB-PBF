@@ -46,4 +46,15 @@ class DetailTransactionController extends Controller
         $detail->save();
         return back();
     }
+    
+    public function finishRequest($nomor_peminjaman, $nomor_buku)
+    {
+        $detail = DetailTransactionModel::where('nomor_buku', $nomor_buku)
+            ->where('nomor_peminjaman', $nomor_peminjaman)
+            ->firstOrFail();
+        $detail->tanggal_pengembalian = now();
+        $detail->status = 4;
+        $detail->save();
+        return back();
+    }
 }

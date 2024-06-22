@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DendaModel;
 use App\Models\DetailTransactionModel;
+use App\Models\DurasiModel;
 use App\Models\TransactionModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 class TransactionController extends Controller
 {
@@ -41,18 +44,35 @@ class TransactionController extends Controller
     public function store($id)
     {
         $userId = Auth::id();
-        $nomorPeminjaman = (string)mt_rand(1000000000, 9999999999);
 
-        // Fetch the existing transaction or create a new one
+        // Retrieve or create the first DendaModel
+        $denda = DendaModel::firstOrCreate([], ['nama'=>'tiga ribu','denda' => 3000]);
+        $idDenda = $denda->id_denda;
+
+        // Retrieve or create the first DurasiModel
+        $durasi = DurasiModel::firstOrCreate([], ['durasi' => 7]);
+        $idDurasi = $durasi->id_durasi;
+
+        // Generate nomor_peminjaman
+        $currentDate = now()->format('ymd');
+        $randomNumber = mt_rand(1000, 9999);
+        $nomorPeminjaman = $currentDate . $randomNumber;
+
+        // Retrieve or create the first TransactionModel
         $transaksi = TransactionModel::firstOrCreate(
             ['id_user' => $userId, 'status' => 0],
-            ['nomor_peminjaman' => $nomorPeminjaman]
+            [
+                'nomor_peminjaman' => $nomorPeminjaman,
+                'id_denda' => $idDenda,
+                'id_durasi' => $idDurasi
+            ]
         );
 
         // Check if the book has already been borrowed
         if (DetailTransactionModel::where('nomor_peminjaman', $transaksi->nomor_peminjaman)
             ->where('nomor_buku', $id)
-            ->exists()) {
+            ->exists()
+        ) {
             Session::flash('warning', 'Anda sudah meminjam buku ini.');
             return redirect()->back();
         }
@@ -63,16 +83,16 @@ class TransactionController extends Controller
             'nomor_buku' => $id
         ]);
 
-        // Redirect to the user loan page
         return redirect(route('pinjaman.index.user'));
     }
+
 
     public function update($id)
     {
         $transaksi = TransactionModel::find($id);
         $transaksi->update(['status' => 1]);
 
-        return response()->json(array('transaksi' => $transaksi));
+        return redirect(route('pinjaman.index.user'));
     }
 
     public function destroy($id)
@@ -85,8 +105,9 @@ class TransactionController extends Controller
 
     public function showAdmin()
     {
+        $transaksi = DetailTransactionModel::where('status', '!=', '0')->get();
 
-        return view('transaction.admin.history');
+        return view('transaction.admin.history', compact('transaksi'));
     }
 
     public function showUser()

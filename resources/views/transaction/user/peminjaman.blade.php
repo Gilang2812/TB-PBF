@@ -26,7 +26,7 @@
                             <img class="mx-6 h-16 w-12 bg-slate-200 rounded-md" src="" alt="gambar buku">
                             <p class="grow px-8">{{ $t->buku->judul_buku }}</p> 
                             <div class="px-10 ">
-                                @switch($item->status)
+                                @switch($t->status)
                                 @case(0)
                                     <p
                                         class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl w-fit px-2 py-1 text-white">

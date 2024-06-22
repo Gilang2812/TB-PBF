@@ -23,11 +23,26 @@
                         @php
                             $transaksiPeminjaman = $transaksi->where('nomor_peminjaman', $t->nomor_peminjaman);
                             $totalBooks = $transaksiPeminjaman->count();
-                            $returnedBooks = $transaksiPeminjaman->where('status', 4)->count(); // Assuming status 2 means returned
+                            $returnedBooks = $transaksiPeminjaman->where('status', 4)->count();
                             $returnedPercentage = $totalBooks ? ($returnedBooks / $totalBooks) * 100 : 0;
                             $durasi = 3; // Durasi peminjaman dalam hari
                             $tanggalPeminjaman = Carbon::parse($t->peminjaman?->tanggal_peminjaman);
                             $deadlinePengembalian = $tanggalPeminjaman->copy()->addDays($durasi);
+                            $totalDenda = 0;
+
+                            foreach ($transaksiPeminjaman as $item) {
+                                $tanggal = $item->tanggal_pengembalian
+                                    ? Carbon::parse($item->tanggal_pengembalian)
+                                    : now();
+                                $dueDate = $tanggalPeminjaman->copy()->addDays($durasi)->startOfDay();
+                                $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
+                                $absoluteDaysDifference = abs($daysDifference);
+                                $finePerDay = $item->peminjaman?->denda?->denda ?? 3000;
+                                $fine = $tanggal->greaterThan($dueDate)
+                                    ? $absoluteDaysDifference * $finePerDay
+                                    : 0;
+                                $totalDenda += $fine;
+                            }
                         @endphp
 
                         <div x-data="{
@@ -38,19 +53,19 @@
                             bg: '',
                             rotate: '',
                             pd: '',
-                            text:'',
+                            text: '',
                             handleClick() {
                                 this.open = !this.open;
                                 this.height = this.open ? this.contentHeight : 0;
-                                this.bg = this.open ? 'bg-slate-400' : '';
+                                this.bg = this.open ? 'bg-slate-200' : '';
                                 this.rotate = this.open ? 'rotate-90' : '';
                                 this.pd = this.open ? 'mb-4' : '';
-                                this.text = this.open ? 'text-white' : '';
+                                this.text = this.open ? 'text-white bg-slate-200' : 'bg-blue-500';
                             }
                         }" x-init="contentHeight = $refs.content.scrollHeight;
                         delay = 100 * {{ $loop->index }}">
                             <div @click="setTimeout(() => handleClick(), delay)"
-                                :class="` shadow-md border-b rounded-l-3xl bg-white rounded-br-[30px] font-mono flex justify-between ${bg} transition-all duration-300 ${text}`">
+                                :class="` shadow-md border-b rounded-l-3xl  rounded-br-[30px] font-mono flex justify-between  bg-white  transition-all duration-300 `">
                                 <div class="items-center py-1 grid grid-cols-5 grow pl-6">
                                     <p>{{ $t->nomor_peminjaman }}</p>
 
@@ -63,8 +78,9 @@
                                         <p>{{ $deadlinePengembalian->translatedFormat('d-m-Y') }}</p>
                                     </div>
                                     <div class="text-center">
-                                        <p class="text-xs">Total Denda</p>
-                                        <p>Rp 20.000</p>
+                                        <p class="text-xs"> Denda</p>
+                                        <p>{{ 'Rp ' . number_format($totalDenda, 0, ',', '.') }}</p>
+
                                     </div>
                                     <div class="flex gap-2 items-center">
                                         <div class="w-20 bg-slate-200 text-white text-center rounded-md">
@@ -88,14 +104,28 @@
                             <div x-ref="content" :style="{ height: `${height}px` }"
                                 :class="`mb-2 overflow-hidden transition-height duration-300 ease-in-out `">
                                 @foreach ($transaksiPeminjaman as $item)
+                                    @php
+                                        $tanggal = $item->tanggal_pengembalian
+                                            ? Carbon::parse($item->tanggal_pengembalian)
+                                            : now();
+                                        $durasi = $item->peminjaman?->durasi?->durasi ?? 7;
+                                        $tanggalPeminjaman = Carbon::parse($item->peminjaman->tanggal_peminjaman);
+                                        $dueDate = $tanggalPeminjaman->addDays($durasi)->startOfDay();
+                                        $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
+                                        $absoluteDaysDifference = abs($daysDifference);
+                                        $finePerDay = $item->peminjaman?->denda?->denda ?? 3000;
+                                        $fine = $tanggal->greaterThan($dueDate)
+                                            ? $absoluteDaysDifference * $finePerDay
+                                            : 0;
+                                    @endphp
                                     <div class="">
                                         <div
                                             class="bg-slate-200 grid grid-cols-8 items-center gap-8 border-0 font-mono border-cyan-700 border-t shadow-md rounded-l-3xl rounded-br-[30px] cursor-pointer">
                                             <img class="mx-6 h-16 w-12 bg-slate-200 rounded-sm " src=""
                                                 alt="gambar buku">
                                             <div class="text-center text-sm px-8 col-span-2">
-                                                <p>{{$item->nomor_buku}} </p>
-                                                <p>{{$item->buku->judul_buku}} </p>
+                                                <p>{{ $item->nomor_buku }} </p>
+                                                <p>{{ $item->buku->judul_buku }} </p>
                                             </div>
                                             <div class="px-10 justify-center items-center">
                                                 @switch($item->status)
@@ -138,13 +168,16 @@
                                             </div>
                                             <div class="col-span-2 text-center">
                                                 <h1 class="text-xs text-center ">Tanggal Dikembalikan</h1>
-                                                <h1>{{ $item->tanggal_pengembalian ? Carbon::parse($item->tanggal_pengembalian)->format('l, d-m-Y') : 'Belum Dikembalikan' }}</h1>
+                                                <h1>{{ $item->tanggal_pengembalian ? Carbon::parse($item->tanggal_pengembalian)->format('l, d-m-Y') : 'Belum Dikembalikan' }}
+                                                </h1>
                                             </div>
                                             <div class="text-center">
                                                 <h1 class="text-xs text-center">Denda</h1>
-                                                <h1>RP. 2000</h1>
+                                                <h1 class="text-xs text-center">{{$absoluteDaysDifference}}</h1>
+                                                <h1>{{ 'Rp ' . number_format($fine, 0, ',', '.') }}</h1>
                                             </div>
-                                            <div class="flex h-16 rounded-3xl items-center justify-center justify-self-end">
+                                            <div
+                                                class="flex h-16 rounded-3xl items-center justify-center justify-self-end">
                                                 <form
                                                     action="{{ route('pinjaman.return', ['nomor_peminjaman' => $item->nomor_peminjaman, 'nomor_buku' => $item->nomor_buku]) }}"
                                                     class="h-full" method="POST">
