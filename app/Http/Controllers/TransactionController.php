@@ -6,6 +6,7 @@ use App\Models\DendaModel;
 use App\Models\DetailTransactionModel;
 use App\Models\DurasiModel;
 use App\Models\TransactionModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Carbon;
@@ -14,10 +15,8 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transaksi = DetailTransactionModel::with('peminjaman')
-            ->whereHas('peminjaman', function ($query) {
-                $query->where('status', 1);
-            })->get();
+   
+        $transaksi = DetailTransactionModel::all()->where('status', 0)->where('peminjaman.status', 1);
         $transaksiUnik = $transaksi->unique('nomor_peminjaman',);
         $responseData = [
             'user' => $transaksiUnik,
@@ -103,11 +102,17 @@ class TransactionController extends Controller
         return response()->json(array('transaksi' => $transaksi));
     }
 
-    public function showAdmin()
+    public function showAdmin(Request $request)
     {
-        $transaksi = DetailTransactionModel::where('status', '!=', '0')->get();
+    $status = $request->query('status');
 
-        return view('transaction.admin.history', compact('transaksi'));
+    if ($status) {
+        $transaksi = DetailTransactionModel::where('status', $status)->get();
+    } else {
+        $transaksi = DetailTransactionModel::where('status', '!=', '0')->get();
+    }
+
+    return view('transaction.admin.history', compact('transaksi'));
     }
 
     public function showUser()
@@ -118,9 +123,7 @@ class TransactionController extends Controller
                 $query->where('id_user', Auth::id());
                 $query->where('status', '!=', 0);
             })->get();
-
-
-
+ 
         return view('transaction.user.history', compact('transaksi'));
     }
 }

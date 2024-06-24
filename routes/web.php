@@ -90,8 +90,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 // Route for dashboard
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[BookController::class,'dashboard'])->middleware(['auth', 'verified','admin'])->name('dashboard');
 
 require __DIR__ . '/auth.php';

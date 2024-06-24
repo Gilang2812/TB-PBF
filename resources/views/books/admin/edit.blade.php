@@ -23,8 +23,8 @@
 
                         <!-- Field Posisi -->
                         <div>
-                            <label for="id_posisi" class="text-lg font-semibold">Posisi:</label>
-                            <select id="id_posisi" name="id_posisi" required
+                            <label for="id_posisi" class="text-lg font-semibold" hidden>Posisi:</label>
+                            <select id="id_posisi" name="id_posisi" 
                                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
                                 @foreach ($posisi as $pos)
                                     <option value="{{ $pos->id_posisi }}"
@@ -38,7 +38,7 @@
                         <!-- Field Penerbit -->
                         <div>
                             <label for="id_penerbit" class="text-lg font-semibold">Penerbit:</label>
-                            <select id="id_penerbit" name="id_penerbit" required
+                            <select id="id_penerbit" name="id_penerbit" 
                                 class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
                                 @foreach ($penerbit as $pen)
                                     <option value="{{ $pen->id_penerbit }}"

@@ -28,25 +28,25 @@
                             $totalBooks = $transaksiPeminjaman->count();
                             $returnedBooks = $transaksiPeminjaman->where('status', 4)->count();
                             $returnedPercentage = $totalBooks ? ($returnedBooks / $totalBooks) * 100 : 0;
-                            $durasi = $t->peminjaman?->durasi?->durasi ?? 3;
+                            $durasi = $item->peminjaman?->durasi?->durasi ?? 7;
                             $tanggalPeminjaman = Carbon::parse($t->peminjaman?->tanggal_peminjaman);
                             $deadlinePengembalian = $tanggalPeminjaman->copy()->addDays($durasi);
-                            $totalDenda = 0;
-
+                            
+                            $totalDenda = [];
                             foreach ($transaksiPeminjaman as $item) {
                                 $tanggal = $item->tanggal_pengembalian
                                     ? Carbon::parse($item->tanggal_pengembalian)
                                     : now();
-                                $dueDate = $tanggalPeminjaman->copy()->addDays($durasi)->startOfDay();
-                                $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
+                                $dueDate = $tanggalPeminjaman->addDays($durasi)->startOfDay();
+                                        $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
                                 $absoluteDaysDifference = abs($daysDifference);
                                 $finePerDay = $item->peminjaman?->denda?->denda ?? 3000;
                                 $fine = $tanggal->greaterThan($dueDate) ? $absoluteDaysDifference * $finePerDay : 0;
-                                $totalDenda += $fine;
+                                $totalDenda[] = $fine;
                             }
+                            $sumTotalDenda = array_sum($totalDenda);
                         @endphp
-
-                        <div x-data="{
+  <div x-data="{
                             open: false,
                             height: 0,
                             contentHeight: 0,
@@ -80,8 +80,7 @@
                                     </div>
                                     <div class="text-center">
                                         <p class="text-xs"> Denda</p>
-                                        <p>{{ 'Rp ' . number_format($totalDenda, 0, ',', '.') }}</p>
-
+                                        <p>{{ 'Rp ' . number_format($sumTotalDenda, 0, ',', '.') }}</p>
                                     </div>
                                     <div class="flex gap-2 items-center">
                                         <div class="w-20 bg-slate-200 text-white text-center rounded-md">

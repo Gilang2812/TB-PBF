@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\bookModel;
+use App\Models\DetailTransactionModel;
 use App\Models\PenerbitModel;
 use App\Models\PosisiModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -12,6 +14,15 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
+
+    public function dashboard(){
+        $user = User::where('isAdmin', '!=',1)->get();
+        $book = bookModel::all();
+        $transaksi = DetailTransactionModel::all();
+
+       // return response()->json(array('user' => $transaksi));
+        return view('dashboard',compact('user','book','transaksi'));
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');

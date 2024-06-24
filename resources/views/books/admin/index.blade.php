@@ -29,7 +29,7 @@
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Pengarang</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Ketersediaan</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Image</th>
-                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Posisi</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase" hidden>Posisi</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Aksi</th>
                                     </tr>
                                 </thead>
@@ -43,7 +43,7 @@
                                             <td class="px-6 py-4">{{ ucwords($buku->pengarang)}}</td>
                                             <td class="px-6 py-4">{{ $buku->ketersediaan }}</td>
                                             <td class="px-6 py-4">{{ $buku->image }}</td>
-                                            <td class="px-6 py-4">{{ $buku->posisi?->posisi }}</td>
+                                            <td class="px-6 py-4" hidden>{{ $buku->posisi?->posisi }}</td>
                                             <td class="px-6 py-4">
                                                 <!-- Edit button -->
                                                 <a href="/book/{{ $buku->nomor_buku }}"

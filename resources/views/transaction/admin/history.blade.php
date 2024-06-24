@@ -28,7 +28,7 @@
                             $books = $transaksi->where('nomor_peminjaman', $t->nomor_peminjaman);
                             $totalBooks = $books->count();
                             $returnedBooks = $books->where('status', 4)->count();
-                            $durasi = $t->peminjaman?->durasi?->durasi ?? 3;
+                            $durasi = $item->peminjaman?->durasi?->durasi ?? 7;
                             $returnedPercentage = ($returnedBooks / $totalBooks) * 100;
                             $totalDenda = 0;
 
@@ -112,7 +112,7 @@
                                             $tanggal = $item->tanggal_pengembalian
                                                 ? Carbon::parse($item->tanggal_pengembalian)
                                                 : now();
-                                            $durasi = $item->peminjaman?->durasi?->durasi ?? 0;
+                                            $durasi = $item->peminjaman?->durasi?->durasi ?? 7;
                                             $tanggalPeminjaman = Carbon::parse($item->peminjaman->tanggal_peminjaman);
                                             $dueDate = $tanggalPeminjaman->addDays($durasi)->startOfDay();
                                             $daysDifference = $tanggal->startOfDay()->diffInDays($dueDate, false);
