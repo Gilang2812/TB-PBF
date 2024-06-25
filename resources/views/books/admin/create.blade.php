@@ -66,7 +66,7 @@
                             <p class="text-lg font-semibold py-3">Gambar Buku:</p>
                             <label for="gambar_buku"
                                 class="cursor-pointer text-lg font-semibold w-full px-3 py-2 border-2 bg-gradient-to-b from-white via-slate-100 to-zinc-100 rounded-lg  border-slate-200 focus:outline-none focus:ring focus:border-blue-300 hover:from-zinc-200 transition duration-300">pilih gambar</label>
-                            <input type="file" id="gambar_buku" name="gambar_buku"  class="hidden">
+                            <input type="file" id="gambar_buku" name="gambar_buku"  class="">
                         </div>
             
                         <button type="submit"

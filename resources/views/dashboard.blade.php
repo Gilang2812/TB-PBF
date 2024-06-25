@@ -66,7 +66,7 @@
 
                             </div>
 
-                            <a href="{{ route('pinjaman.history.admin') }}"
+                            <a href="{{ route('pinjaman.history.admin', ['status' => 4]) }}"
                                 class="text-lg bg-cyan-600 text-center py-1 text-white w-full rounded-b-lg">
                                 more info <i class="fas fa-arrow-circle-right"></i>
                             </a>
@@ -92,7 +92,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($transaksi->where('status', 0)->count() != 0)
+                                @if ($transaksi->where('status', 0)->where('peminjaman.status=1')->count() != 0)
                                     <tr onclick="window.location='{{ url('/peminjaman?status=0') }}'" class="grid text-sm grid-cols-3  border-b-2 border-white bg-yellow-500/30 text-white py-2 pl-3 cursor-pointer hover:bg-yellow-500/50 transition duration-300">
                                         <td class="col-span-2 flex items-center">
                                             <div class="relative mr-2">
@@ -102,7 +102,7 @@
                                             </div>
                                             Terdapat pengajuan konfirmasi peminjaman
                                         </td>
-                                        <td class="text-center">{{ $transaksi->where('status', 0)->count() }}</td>
+                                        <td class="text-center">{{ $transaksi->where('status', 0)->where('peminjaman.status=1')->count() }}</td>
                                     </tr>
                                 @endif
                                 @if ($transaksi->where('status', 3)->count() != 0)

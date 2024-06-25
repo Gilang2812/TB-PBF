@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('telp')->nullable();
             $table->integer('isAdmin')->default(0); 
             $table->string('image')->nullable();
             $table->foreign('id_jurusan')->references('id_jurusan')->on('jurusan')->onDelete('no action');

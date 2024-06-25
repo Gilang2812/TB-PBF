@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookModel;
 use App\Models\DendaModel;
 use App\Models\DetailTransactionModel;
 use App\Models\DurasiModel;
@@ -15,7 +16,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-   
+
         $transaksi = DetailTransactionModel::all()->where('status', 0)->where('peminjaman.status', 1);
         $transaksiUnik = $transaksi->unique('nomor_peminjaman',);
         $responseData = [
@@ -43,15 +44,19 @@ class TransactionController extends Controller
     public function store($id)
     {
         $userId = Auth::id();
+        $book = BookModel::where('nomor_buku', $id)->first();
 
         // Retrieve or create the first DendaModel
-        $denda = DendaModel::firstOrCreate([], ['nama'=>'tiga ribu','denda' => 3000]);
+        $denda = DendaModel::firstOrCreate([], ['nama' => 'tiga ribu', 'denda' => 3000]);
         $idDenda = $denda->id_denda;
 
         // Retrieve or create the first DurasiModel
         $durasi = DurasiModel::firstOrCreate([], ['durasi' => 7]);
         $idDurasi = $durasi->id_durasi;
 
+        if($book->ketersediaan == 0){
+            return back()->white('warnimg',' tidak  yang tersedia untuk di pinjam ');
+        }
         // Generate nomor_peminjaman
         $currentDate = now()->format('ymd');
         $randomNumber = mt_rand(1000, 9999);
@@ -76,11 +81,18 @@ class TransactionController extends Controller
             return redirect()->back();
         }
 
+
         // Create the detail transaction
-        DetailTransactionModel::create([
+        $detail = DetailTransactionModel::create([
             'nomor_peminjaman' => $transaksi->nomor_peminjaman,
             'nomor_buku' => $id
         ]);
+
+
+        if ($book) {
+            $book->ketersediaan -= 1;
+            $book->save();
+        }
 
         return redirect(route('pinjaman.index.user'));
     }
@@ -104,15 +116,15 @@ class TransactionController extends Controller
 
     public function showAdmin(Request $request)
     {
-    $status = $request->query('status');
+        $status = $request->query('status');
 
-    if ($status) {
-        $transaksi = DetailTransactionModel::where('status', $status)->get();
-    } else {
-        $transaksi = DetailTransactionModel::where('status', '!=', '0')->get();
-    }
+        if ($status) {
+            $transaksi = DetailTransactionModel::where('status', $status)->get();
+        } else {
+            $transaksi = DetailTransactionModel::where('status', '!=', '0')->get();
+        }
 
-    return view('transaction.admin.history', compact('transaksi'));
+        return view('transaction.admin.history', compact('transaksi'));
     }
 
     public function showUser()
@@ -123,7 +135,7 @@ class TransactionController extends Controller
                 $query->where('id_user', Auth::id());
                 $query->where('status', '!=', 0);
             })->get();
- 
+
         return view('transaction.user.history', compact('transaksi'));
     }
 }

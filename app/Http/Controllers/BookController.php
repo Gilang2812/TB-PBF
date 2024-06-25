@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Validator;
 class BookController extends Controller
 {
 
-    public function dashboard(){
-        $user = User::where('isAdmin', '!=',1)->get();
+    public function dashboard()
+    {
+        $user = User::where('isAdmin', '!=', 1)->get();
         $book = bookModel::all();
         $transaksi = DetailTransactionModel::all();
 
-       // return response()->json(array('user' => $transaksi));
-        return view('dashboard',compact('user','book','transaksi'));
+        // return response()->json(array('user' => $transaksi));
+        return view('dashboard', compact('user', 'book', 'transaksi'));
     }
     public function index(Request $request)
     {
@@ -40,10 +41,16 @@ class BookController extends Controller
     public function indexClient(Request $request)
     {
         $search = $request->input('search');
-        $query = bookModel::query();
+        $query = BookModel::query();
 
         if ($search) {
-            $query->where('judul_buku', 'like', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->where('judul_buku', 'like', '%' . $search . '%')
+                    ->orWhere('nomor_buku', 'like', '%' . $search . '%')
+                    ->orWhere('pengarang.pengarang', 'like', '%' . $search . '%')
+                    ->orWhere('id_penerbit', 'like', '%' . $search . '%')
+                    ->orWhere('ketersediaan', 'like', '%' . $search . '%');
+            });
         }
 
         $book = $query->get();
@@ -63,7 +70,9 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             'nomor_buku' => 'required',
             'judul_buku' => 'required',
-            'ketersediaan' => 'required'
+            'pengarang' => 'required',
+            'ketersediaan' => 'required|integer',
+            'gambar_buku' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'required' => 'Kolom :attribute wajib diisi.'
         ]);
@@ -72,7 +81,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $buku = new bookModel();
+        $buku = new BookModel();
         $buku->nomor_buku = $request->nomor_buku;
         $buku->id_posisi = $request->id_posisi;
         $buku->judul_buku = $request->judul_buku;
@@ -80,10 +89,16 @@ class BookController extends Controller
         $buku->pengarang = $request->pengarang;
         $buku->ketersediaan = $request->ketersediaan;
 
-        $buku->save();
+        if ($request->hasFile('gambar_buku')) {
+            $imagePath = $request->file('gambar_buku')->store('gambar_buku', 'public');
+            $buku->image = $imagePath;
+        }
 
-        return Redirect::route('denda.index');
+        $buku->save();
+        return response()->json(array('success' => $imagePath ?? ''));
+        return Redirect::route('book.index');
     }
+
 
     public function edit($id)
     {
@@ -120,7 +135,15 @@ class BookController extends Controller
 
     public function destroy($id)
     {
+        $usedBook = DetailTransactionModel::where('nomor_buku', $id)->get();
+        if ($usedBook) {
+            return redirect()->route('book.index')->with('warning', 'Buku tidak bisa dihapus karena sudah digunakan');
+        }
+
+        //return response()->json(array('data' => $usedBook));
         $buku = bookModel::destroy($id);
+
+
         return redirect()->route('book.index');
     }
 }

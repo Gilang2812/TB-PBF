@@ -29,7 +29,7 @@
                                 <thead>
                                     <tr class="bg-gray-50 text-center">
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nomor</th>
-                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">ID User</th>
+                                        <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nim</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Nama</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Email</th>
                                         <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Aksi</th>
@@ -39,7 +39,7 @@
                                     @foreach ($users as $user)
                                         <tr class="hover:bg-slate-50">
                                             <td class="px-6 py-4">{{ $loop->iteration }}</td>
-                                            <td class="px-6 py-4">{{ $user->id }}</td>
+                                            <td class="px-6 py-4">{{ $user->nim }}</td>
                                             <td class="px-6 py-4">{{ $user->name }}</td>
                                             <td class="px-6 py-4">{{ $user->email }}</td>
                                             <td class="px-6 py-4">

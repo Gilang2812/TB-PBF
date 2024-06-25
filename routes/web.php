@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 // Routes for books
 Route::get('/book/user', [BookController::class, 'indexClient'])->name('book.userIndex');
-Route::get('/book/{id}', [BookController::class, 'edit'])->name('book.edit');
+Route::get('/book/{id}/update', [BookController::class, 'edit'])->name('book.edit');
 
 
 

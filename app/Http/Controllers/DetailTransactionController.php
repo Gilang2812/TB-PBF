@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookModel;
 use App\Models\DetailTransactionModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,10 +44,15 @@ class DetailTransactionController extends Controller
         $tanggalPeminjamanPlus3 = $tanggalPeminjaman->addDays(3);
         $detail->status = now()->greaterThan($tanggalPeminjamanPlus3) ? 3 : 4;
 
-        $detail->save();
+        $book = BookModel::where('nomor_buku', $nomor_buku)->first();
+        if ($book) {
+            $book->ketersediaan += 1;
+            $book->save();
+        }
+
         return back();
     }
-    
+
     public function finishRequest($nomor_peminjaman, $nomor_buku)
     {
         $detail = DetailTransactionModel::where('nomor_buku', $nomor_buku)

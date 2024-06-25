@@ -25,7 +25,7 @@
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" disabled/>
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" readonly/>
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -47,6 +47,19 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="nim" :value="__('nim')" />
+            <x-text-input id="nim" name="nim" type="text" class="mt-1 block w-full" :value="old('nim', $user->nim)" autocomplete="nim" />
+            <x-input-error class="mt-2" :messages="$errors->get('nim')" />
+
+        </div>
+
+        <div>
+            <x-input-label for="telp" :value="__('telp')" />
+            <x-text-input id="telp" name="telp" type="text" class="mt-1 block w-full" :value="old('telp', $user->telp)" autocomplete="telp" />
+            <x-input-error class="mt-2" :messages="$errors->get('telp')" />
+
+        </div>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
