@@ -95,7 +95,6 @@ class BookController extends Controller
         }
 
         $buku->save();
-        return response()->json(array('success' => $imagePath ?? ''));
         return Redirect::route('book.index');
     }
 
