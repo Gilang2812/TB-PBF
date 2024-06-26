@@ -51,7 +51,7 @@ class TransactionController extends Controller
         $idDenda = $denda->id_denda;
 
         // Retrieve or create the first DurasiModel
-        $durasi = DurasiModel::firstOrCreate([], ['durasi' => 7]);
+        $durasi = DurasiModel::firstOrCreate([], ['nama' => 'tujuh hari','durasi' => 7]);
         $idDurasi = $durasi->id_durasi;
 
         if($book->ketersediaan == 0){
