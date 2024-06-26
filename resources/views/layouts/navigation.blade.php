@@ -39,7 +39,11 @@
                         <x-nav-link :href="route('book.userIndex')" :active="request()->routeIs('book.userIndex')">
                             {{ __('Book') }}
                         </x-nav-link>
+                        
                         @if (Auth::check())
+                        <x-nav-link :href="route('penerbit.index')" :active="request()->routeIs('penerbit.index')">
+                            {{ __('Penerbit') }}
+                        </x-nav-link>
                             <x-nav-link :href="route('pinjaman.index.user')" :active="request()->routeIs('pinjaman.index.user')">
                                 {{ __('Peminjaman') }}
                             </x-nav-link>

@@ -70,8 +70,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Routes for penerbit
-Route::middleware(['auth','admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/penerbit', [PenerbitController::class, 'index'])->name('penerbit.index');
+    Route::get('/penerbit/user', [TransactionController::class, 'indexClient'])->name('penerbit.index.user');
     Route::get('/penerbit/create', [PenerbitController::class, 'create'])->name('penerbit.create');
     Route::post('/penerbit/create', [PenerbitController::class, 'store']);
     Route::get('/penerbit/{id}', [PenerbitController::class, 'edit'])->name('penerbit.edit');
