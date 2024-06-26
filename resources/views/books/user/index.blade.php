@@ -28,7 +28,7 @@
                         @foreach ($book as $buku)
                             <div class="bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] rounded-lg  p-3 flex space-x-6">
                                 <div class="w-44 px-3">
-                                    <img class="bg-slate-200 rounded-lg h-24" src="" alt="gambar buku">
+                                    <img class="{{ asset('storage/' . $buku->image) }}" class="bg-slate-200 rounded-lg h-24" src="" alt="gambar buku">
                                 </div>
                                 <div class="w-full space-y-3">
                                     <h1 class="text-2xl">{{ $buku->judul_buku }}</h1>
