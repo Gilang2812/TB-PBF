@@ -24,6 +24,14 @@ class BookController extends Controller
         // return response()->json(array('user' => $transaksi));
         return view('dashboard', compact('user', 'book', 'transaksi'));
     }
+    public function dashboardUser()
+    {
+       
+        $book = bookModel::all();
+        $transaksi = DetailTransactionModel::all()->where('peminjaman.id_user', Auth::id())->where('peminjaman.status', 1);
+
+        return view('dashboardUser', compact( 'book', 'transaksi'));
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -121,7 +129,7 @@ class BookController extends Controller
         ], [
             'required' => 'Kolom :attribute wajib diisi.'
         ]);
-
+        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
