@@ -72,7 +72,7 @@
 
                                     <div class="text-center">
                                         <p class="text-xs ">Tanggal Peminjaman</p>
-                                        <p>{{ $tanggalPeminjaman->translatedFormat('l, d F Y') }}</p>
+                                        <p>{{ Carbon::parse($t->peminjaman?->tanggal_peminjaman)->translatedFormat('l, d F Y') }}</p>
                                     </div>
                                     <div class="text-center">
                                         <p class="text-xs">Deadline</p>

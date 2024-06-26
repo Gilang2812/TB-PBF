@@ -14,50 +14,49 @@
         <div class="max-w-7xl text-sm mx-auto sm:px-6 lg:px-8 space-y-2 bg-blend-hard-light ">
             <div class="bg-white/40 border border-white backdrop-blur-sm overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black h-full">
-                    <div class="flex justify-around">
-                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl shadow-lg rounded-lg bg-white">
+                    <div class="flex justify-around space-x-4">
+                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl shadow-lg rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                             <div class="relative p-8 grow space-y-2">
                                 <strong class="text-4xl">{{ $transaksi->where('status', 0)->count() }}</strong>
-                                <i class="absolute right-4 text-cyan-300/40 h-16 text-6xl fas fa-users"></i>
+                                <i class="absolute right-4 text-white/40 h-16 text-6xl fas fa-users"></i>
                                 <p class="text-lg font-bold font-sans">Waiting Request</p>
                             </div>
-                            <a href="{{ route('pinjaman.history.user', ['status' => 0]) }}" class="text-lg bg-cyan-600 text-center py-1 text-white w-full rounded-b-lg">
+                            <a href="{{ route('pinjaman.history.user', ['status' => 0]) }}" class="text-lg bg-white text-cyan-600 text-center py-1 w-full rounded-b-lg hover:bg-cyan-600 hover:text-white transition duration-300">
                                 more info <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
-                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl rounded-b-lg shadow bg-white">
+                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl shadow-lg rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white">
                             <div class="relative p-8 grow space-y-2">
                                 <strong class="text-4xl">{{ $transaksi->where('status', 2)->count() }}</strong>
-                                <i class="absolute right-4 text-cyan-300/40 h-16 text-6xl fas fa-book-reader"></i>
+                                <i class="absolute right-4 text-white/40 h-16 text-6xl fas fa-times-circle"></i>
                                 <p class="text-lg font-bold font-sans">Rejected Request</p>
                             </div>
-                            <a href="{{ route('pinjaman.history.user', ['status' => 2]) }}" class="text-lg bg-cyan-600 text-center py-1 text-white w-full rounded-b-lg">
+                            <a href="{{ route('pinjaman.history.user', ['status' => 2]) }}" class="text-lg bg-white text-red-600 text-center py-1 w-full rounded-b-lg hover:bg-red-600 hover:text-white transition duration-300">
                                 more info <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
-                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl rounded-b-lg shadow bg-white">
+                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl shadow-lg rounded-lg bg-gradient-to-r from-green-500 to-teal-500 text-white">
                             <div class="relative p-8 grow space-y-2">
-                                <i class="absolute right-4 text-cyan-300/40 h-16 text-3xl z-0 top-6 fas fa-book"></i>
-                                <i class="absolute right-4 text-cyan-300/40 h-16 text-5xl z-0 top-6 fas fa-hand-holding"></i>
                                 <strong class="text-4xl">{{ $transaksi->where('status', 1)->count() }}</strong>
-                                <p class="text-lg text-wrap font-bold font-sans">Accepted</p>
+                                <i class="absolute right-4 text-white/40 h-16 text-6xl fas fa-check-circle"></i>
+                                <p class="text-lg font-bold font-sans">Accepted</p>
                             </div>
-                            <a href="{{ route('pinjaman.history.user', ['status' => 1]) }}" class="text-lg bg-cyan-600 text-center py-1 text-white w-full rounded-b-lg">
+                            <a href="{{ route('pinjaman.history.user', ['status' => 1]) }}" class="text-lg bg-white text-green-600 text-center py-1 w-full rounded-b-lg hover:bg-green-600 hover:text-white transition duration-300">
                                 more info <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
-                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl rounded-b-lg bg-white">
+                        <div class="size-48 flex flex-col justify-between text-4xl rounded-t-3xl shadow-lg rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
                             <div class="relative p-8 grow space-y-2">
-                                <i class="absolute right-4 text-cyan-600/50 h-16 text-sm z-10 top-6 fas fa-undo"></i>
-                                <i class="absolute right-4 text-cyan-300/40 h-16 text-6xl top-4 z-0 fas fa-book"></i>
                                 <strong class="text-4xl">{{ $transaksi->where('status', 4)->count() }}</strong>
-                                <p class="text-lg text-wrap font-bold font-sans z-20">Returned</p>
+                                <i class="absolute right-4 text-white/40 h-16 text-6xl fas fa-undo"></i>
+                                <p class="text-lg font-bold font-sans">Returned</p>
                             </div>
-                            <a href="{{ route('pinjaman.history.admin', ['status' => 4]) }}" class="text-lg bg-cyan-600 text-center py-1 text-white w-full rounded-b-lg">
+                            <a href="{{ route('pinjaman.history.admin', ['status' => 4]) }}" class="text-lg bg-white text-yellow-600 text-center py-1 w-full rounded-b-lg hover:bg-yellow-600 hover:text-white transition duration-300">
                                 more info <i class="fas fa-arrow-circle-right"></i>
                             </a>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="bg-white/40 backdrop-blur-md border text-x border-white overflow-hidden shadow-sm sm:rounded-lg">
