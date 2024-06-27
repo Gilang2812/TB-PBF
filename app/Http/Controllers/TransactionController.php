@@ -44,7 +44,7 @@ class TransactionController extends Controller
     public function store($id)
     {
         $userId = Auth::id();
-        $book = BookModel::where('nomor_buku', $id)->first();
+        $book = bookModel::where('nomor_buku', $id)->first();
 
         // Retrieve or create the first DendaModel
         $denda = DendaModel::firstOrCreate([], ['nama' => 'tiga ribu', 'denda' => 3000]);

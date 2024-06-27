@@ -43,7 +43,7 @@ class DetailTransactionController extends Controller
         $tanggalPeminjamanPlus3 = $tanggalPeminjaman->addDays(3);
         $detail->status = now()->greaterThan($tanggalPeminjamanPlus3) ? 3 : 4;
 
-        $book = BookModel::where('nomor_buku', $nomor_buku)->first();
+        $book = bookModel::where('nomor_buku', $nomor_buku)->first();
         if ($book) {
             $book->ketersediaan += 1;
             $book->save();
