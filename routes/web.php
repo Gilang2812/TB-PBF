@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DetailTransactionController;
 use App\Http\Controllers\ProfileController;
@@ -12,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\DurasiController;
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware(['auth', 'verified','admin']);
 
 // Routes for books
 Route::get('/book/user', [BookController::class, 'indexClient'])->name('book.userIndex');

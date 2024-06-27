@@ -17,7 +17,7 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->isAdmin != 1) {
-            return redirect('/book/user');
+            return redirect('/dashboardUser');
         }
         return $next($request);
     }
