@@ -6,6 +6,7 @@ use App\Models\TransactionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class UserController extends Controller
 {
     // Display a listing of the resource.
@@ -23,7 +24,7 @@ class UserController extends Controller
     // Show the form for creating a new resource.
     public function create(Request $request)
     {
-        
+
         return view('users.admin.create');
     }
 
@@ -87,9 +88,9 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $userTransaction = TransactionModel::all()->where('id_user', $id);
         if ($userTransaction->count() > 0) {
-            return response()->json(array('success' => $userTransaction));
-    return redirect()->route('users.index')->with('warning', "User `{$userTransaction->first()->user->name}` tidak bisa dihapus karena masih memiliki transaksi");
-}
+
+            return redirect()->route('users.index')->with('warning', "User `{$userTransaction->first()->user->name}` tidak bisa dihapus karena masih memiliki transaksi");
+        }
 
         if ($user->image) {
             Storage::disk('public')->delete($user->image);
