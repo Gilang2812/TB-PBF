@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\bookModel;
 use App\Models\DetailTransactionModel;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-
+ 
 class DetailTransactionController extends Controller
 {
     public function cancelAction($nomor_buku, $nomor_peminjaman)
