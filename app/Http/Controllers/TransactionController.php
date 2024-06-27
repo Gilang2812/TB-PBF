@@ -28,16 +28,15 @@ class TransactionController extends Controller
         //  return response()->json(array('user' => $responseData['user'], 'test' => $transaksi));
     }
 
-    public function indexClient()
+    public function indexClient(Request $request)
     {
 
-
-        $transaksi = DetailTransactionModel::with('buku')
-            ->whereHas('peminjaman', function ($query) {
-                $query->where('id_user', Auth::id());
-                $query->where('status', 0);
-            })
-            ->get();
+        $status = $request->query('status');
+        if (!$status){
+            $transaksi = DetailTransactionModel::all()->where('peminjaman.id_user', Auth::id())->where('peminjaman.status',0);
+        }else{
+            $transaksi = DetailTransactionModel::all()->where('peminjaman.id_user', Auth::id())->where('peminjaman.status', 1)->where('status',$status);
+        }
 
         return view('transaction.user.peminjaman', compact('transaksi'));
     }
@@ -145,7 +144,7 @@ public function showUser(Request $request)
 
         $transaksi = $transaksi->filter(function($transaksi) {
             $tanggalPeminjaman = Carbon::parse($transaksi->peminjaman->tanggal_peminjaman);
-            $durasi = $transaksi->peminjaman->durasi->durasi ?? 7; // Nilai default 7 jika durasi tidak tersedia
+            $durasi = $transaksi->peminjaman->durasi->durasi ?? 7; 
             return $tanggalPeminjaman->addDays($durasi)->isToday();
         });
 
