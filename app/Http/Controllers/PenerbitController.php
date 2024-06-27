@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\PenerbitModel;
-use App\Models\BookModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
