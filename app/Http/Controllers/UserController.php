@@ -86,9 +86,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $userTransaction = TransactionModel::all()->where('id_user', $id);
-        if (count($userTransaction) > 0) {
-            return redirect()->route('users.index')->with('warning', 'User tidak bisa dihapus karena masih memiliki transaksi');
-        }
+        if ($userTransaction->count() > 0) {
+            return response()->json(array('success' => $userTransaction));
+    return redirect()->route('users.index')->with('warning', "User `{$userTransaction->first()->user->name}` tidak bisa dihapus karena masih memiliki transaksi");
+}
 
         if ($user->image) {
             Storage::disk('public')->delete($user->image);
