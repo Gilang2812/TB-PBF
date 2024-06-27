@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <small>{{ $returnedBooks }}/{{ $totalBooks }}</small>
-                                        <p><small><i>Returned</i></small></p>
+                                        <p><small><i>Complete</i></small></p>
                                     </div>
                                 </div>
                                 <div class="flex h-16 rounded-3xl items-center justify-center pl-8">
