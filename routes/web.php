@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DendaController;
 use App\Http\Controllers\DurasiController;
 
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware(['auth', 'verified','admin']);
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware(['guest']);
 
 // Routes for books
 Route::get('/book/user', [BookController::class, 'indexClient'])->name('book.userIndex');
