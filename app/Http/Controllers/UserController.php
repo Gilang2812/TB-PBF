@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -84,6 +85,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        $userTransaction = TransactionModel::all()->where('id_user', $id);
+        if (count($userTransaction) > 0) {
+            return redirect()->route('users.index')->with('warning', 'User tidak bisa dihapus karena masih memiliki transaksi');
+        }
+
         if ($user->image) {
             Storage::disk('public')->delete($user->image);
         }
